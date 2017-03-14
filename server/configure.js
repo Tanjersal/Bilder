@@ -1,3 +1,4 @@
+//dependencies
 
 var path = require('path');
 var express = require('express');
@@ -7,26 +8,25 @@ var bodyParser = require('body-parser'); //form submission request are accessibl
 var cookieParser = require('cookie-parser'); //cookies to be send and received
 var morgan = require('morgan'); //module for logging - used in debugging
 var methodOverride = require('method-override'); //for older browser to fake REST verbs
-var errorhandler = require('errorhandler'); //handles error through the middleware
+var errorHandler = require('errorhandler'); //handles error through the middleware
 var moment = require('moment'); //npm module to handle dates formating
-//exports
 
-module.exports = function(app){
+module.exports = function(app) {
 
     app.use(morgan('dev'));
-    app.use(bodyParser.urlencoded({'extended': true}));
-    app.use(bodyParser.json());
-    app.use(methodOverride());
-    app.use(cookieParser('some-secret-value'));
+    app.use(bodyParser({uploadDir:path.join(__dirname, 'public/upload/temp')}));
 
+    app.use(methodOverride());
+    app.use(cookieParser('IciCestParis'));
+    
     routes(app); //moving the routes to route folder
 
-    app.use('/public/', express.static(path.join(__dirname, '../public'))); //or app.use(express.static(__dirname + '/public'));
+    app.use('/public/', express.static(path.join(__dirname,'../public')));
 
-    if('development' === app.get('env')){
-        app.use(errorhandler);
+    if ('development' === app.get('env')) {
+    
+      app.use(errorHandler());
     }
 
-    routes(app); //activate the routes
-
-}
+    return app; //return the app
+};
