@@ -1,20 +1,16 @@
 //entry point
 
 var express = require('express');
-var config = require('./server/configure'); //configuration file
-var app = express();
+var config = require('./server/configure');
 
-app.set('port', process.env.PORT || 8000); //set port 
-app.set('views', __dirname + '/views'); //views location
+app = express();
 
-app = config(app); //reference the configure module
+app.set('port', process.env.PORT || 8000);
+app.set('views', __dirname + '/views');
 
-app.get('/', function(req, res){
+app = config(app);
 
-    res.send('Hello Word, NodeJS is fun!');
-});
+var server = app.listen(app.get('port'), function() {
 
-app.listen(app.get('port'), function(){
-
-    console.log('Server is up running at localhost ' + app.get('port'));
+    console.log('Server up: http://localhost:' + app.get('port'));
 });
