@@ -29,11 +29,11 @@ module.exports = function(app) {
     }
 
     //register the rendering engine as handlebars
-    app.engine('hbs', exphbs.create({
+    app.engine('handlebars', exphbs.create({
 
         defaultLayout: 'main',
         layoutsDir: app.get('views') + '/layouts',
-        partialsDir: [app.get('views') + '/partials'],
+        partialsDir: app.get('views') + '/partials',
 
         //hbs helper
         helpers: {
@@ -46,7 +46,7 @@ module.exports = function(app) {
     }).engine);
 
     //set the view engine
-    app.set('view engine', 'hbs');
+    app.set('view engine', 'handlebars');
 
     return app; //return the app
 };
