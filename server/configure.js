@@ -33,7 +33,15 @@ module.exports = function(app) {
 
         defaultLayout: 'main',
         layoutsDir: app.get('views') + '/layouts',
-        partialsDir: [app.get('views') + '/partials']
+        partialsDir: [app.get('views') + '/partials'],
+
+        //hbs helper
+        helpers: {
+            timeago: function(timeStamp){
+
+                return moment(timeStamp).startOf('minute').toNow(); //custom time using moment.js
+            }
+        }
 
     }).engine);
 
